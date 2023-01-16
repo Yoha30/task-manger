@@ -103,4 +103,10 @@
     .select-style select option{
         background: #2C2C38;
     }
+    .active{
+        @apply bg-[#635FC6] rounded-r-full h-10 w-11/12 text-white !important;
+    }
+    .active svg{
+        @apply fill-white !important;
+    }
 }

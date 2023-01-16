@@ -723,6 +723,21 @@ nav h1 {
   background: #2C2C38;
 }
 
+.active {
+  height: 2.5rem !important;
+  width: 91.666667% !important;
+  border-top-right-radius: 9999px !important;
+  border-bottom-right-radius: 9999px !important;
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(99 95 198 / var(--tw-bg-opacity)) !important;
+  --tw-text-opacity: 1 !important;
+  color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
+}
+
+.active svg {
+  fill: #fff !important;
+}
+
 .fixed {
   position: fixed;
 }
@@ -823,6 +838,10 @@ nav h1 {
 .bg-green-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(134 239 172 / var(--tw-bg-opacity));
+}
+
+.fill-\[\#717785\] {
+  fill: #717785;
 }
 
 .p-2 {
