@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer components {
+    :root {
+        --sidebar-text-color: #717785;
+    }
+
+    body {
+        @apply bg-[#21212D];
+    }
+
+    main {
+        @apply h-full flex;
+    }
+
+    .sidebar {
+        @apply border-r border-gray-200/20 bg-[#2C2C38] w-2/12;
+    }
+
+    nav {
+        @apply bg-[#2C2C38] p-4 border-b col-span-5 border-gray-200/20 w-full h-[14%] flex justify-between place-items-center;
+    }
+
+    nav h1 {
+        @apply text-white text-2xl font-medium;
+    }
+
+    .sidebar > div:first-child {
+        @apply p-4 pt-8;
+    }
+
+    .logo {
+        @apply w-1/2;
+    }
+
+    .sidebar-list li {
+        @apply mt-8 text-[#717785] last:text-[#575396] cursor-pointer font-medium pl-4;
+    }
+
+    .btn-primary {
+        @apply bg-[#635FC6] text-white font-medium px-4 py-2 rounded-full;
+    }
+
+    .content {
+        @apply text-[#717785] font-medium p-4 flex justify-between place-items-start w-[65%];
+    }
+
+    .card {
+        @apply bg-[#2C2C38] p-4 rounded-lg w-80 min-h-full flex justify-center flex-col mt-8 cursor-pointer;
+    }
+
+    .card p {
+        @apply text-white font-medium;
+    }
+
+    .card span {
+        @apply text-[#717785] lowercase text-sm mt-2 font-medium;
+    }
+
+    [class$="popup"] {
+        @apply bg-[#2C2C38] p-8 rounded-lg w-1/3 text-white  mt-8 absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    [class$="popup"] div label {
+        @apply text-sm  ;
+    }
+
+    [class$="popup"] div {
+        @apply mb-4 last:mb-0;
+    }
+
+    [class$="popup"] input, textarea, .select-style {
+        @apply bg-transparent text-white border border-gray-200/20 rounded p-2 w-full outline-0 my-2;
+    }
+
+    [class$="popup"] input::placeholder, textarea::placeholder {
+        @apply text-sm opacity-50;
+    }
+
+    [class$="popup"] input:focus, textarea:focus {
+        @apply bg-transparent text-white border border-gray-200/60 rounded p-2 w-full;
+    }
+
+    .subtask {
+        @apply w-11/12 !important;
+    }
+
+    .select-style {
+        background-image: url("./down-arrow.svg");
+        background-repeat: no-repeat;
+        background-position: right;
+    }
+
+    .select-style select {
+        @apply h-full bg-transparent outline-0 w-full cursor-pointer;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+    .select-style select option{
+        background: #2C2C38;
+    }
+}
