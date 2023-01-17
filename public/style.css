@@ -745,7 +745,7 @@ nav h1 {
   -moz-appearance: none;
 }
 
-.select-style select option{
+.select-style select option {
   background: #2C2C38;
 }
 
@@ -764,8 +764,49 @@ nav h1 {
   fill: #fff !important;
 }
 
+input[type="checkbox"] {
+  position: absolute !important;
+  opacity: 0 !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+  top: 1rem;
+  left: 0.5rem;
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  z-index: 999;
+}
+
+.checkbox {
+  position: absolute;
+  top: 1rem;
+  left: 0.5rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  border-color: rgb(229 231 235 / 0.2);
+  --tw-bg-opacity: 1;
+  background-color: rgb(44 44 56 / var(--tw-bg-opacity));
+}
+
+input:checked ~ .checkbox {
+  background-image: url("./checkmark.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #635FC6;
+}
+
+input:checked ~ p {
+  text-decoration: line-through;
+  color: #717785;
+}
+
 .fixed {
   position: fixed;
+}
+
+.relative {
+  position: relative;
 }
 
 .mx-2 {
@@ -776,6 +817,14 @@ nav h1 {
 .mx-3 {
   margin-left: 0.75rem;
   margin-right: 0.75rem;
+}
+
+.mt-3 {
+  margin-top: 0.75rem;
+}
+
+.ml-8 {
+  margin-left: 2rem;
 }
 
 .mt-12 {
@@ -864,6 +913,11 @@ nav h1 {
   background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
+.bg-\[\#21212D\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(33 33 45 / var(--tw-bg-opacity));
+}
+
 .bg-blue-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(147 197 253 / var(--tw-bg-opacity));
@@ -885,6 +939,10 @@ nav h1 {
 
 .p-2 {
   padding: 0.5rem;
+}
+
+.p-4 {
+  padding: 1rem;
 }
 
 .pl-4 {
@@ -935,6 +993,11 @@ nav h1 {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-gray-500 {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
 @media (min-width: 768px) {

@@ -68,6 +68,31 @@
         <button class="bg-blue-500 text-white p-2 w-full rounded">Add</button>
       </form>
     </div>
+    <div class="task-popup hidden">
+      <div class="flex place-items-center justify-between">
+        <p class="font-medium">{{ title }}</p>
+        <button>
+          <img src="./assets/menu.svg" class="w-6" alt="menu" />
+        </button>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">{{ description }}</p>
+      </div>
+      <div>
+        <p class="text-sm">Subtasks(2 of {{ subtask.length }})</p>
+        <div
+          v-for="task of subtask"
+          v-bind:key="task"
+          class="p-4 flex place-items-center relative bg-[#21212D] rounded mt-3"
+        >
+          <div>
+            <input type="checkbox" v-model="completed" />
+            <span class="checkbox"></span>
+            <p class="ml-8">{{ task }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="sidebar">
       <div>
         <img src="./assets/white-logo.png" alt="logo" class="logo" />
@@ -139,9 +164,14 @@
               <p class="uppercase">todo ({{ todo.length }})</p>
             </div>
             <div v-for="task of tasksValue" v-bind:key="task">
-              <div class="card" v-if="task.status == 'todo'">
+              <div
+                :data-slug="task.id"
+                class="card"
+                v-if="task.status == 'todo'"
+                @click="openTask($event)"
+              >
                 <p>{{ task.title }}</p>
-                <span>0 of {{ task.subtask.length - 1 }} subtasks</span>
+                <span>0 of {{ task.subtask.length }} subtasks</span>
               </div>
             </div>
           </div>
@@ -152,10 +182,15 @@
               <span class="w-4 h-4 rounded-full bg-purple-300 mr-2"></span>
               <p class="uppercase">in progress ({{ inprogress.length }})</p>
             </div>
-            <div v-for="task of tasksValue" v-bind:key="task">
+            <div
+              v-for="task of tasksValue"
+              v-bind:key="task"
+              @click="openTask($event)"
+              :data-slug="task.id"
+            >
               <div class="card" v-if="task.status == 'inprogress'">
                 <p>{{ task.title }}</p>
-                <span>0 of {{ task.subtask.length - 1 }} subtasks</span>
+                <span>0 of {{ task.subtask.length }} subtasks</span>
               </div>
             </div>
           </div>
@@ -167,9 +202,14 @@
               <p class="uppercase">done ({{ done.length }})</p>
             </div>
             <div v-for="task of tasksValue" v-bind:key="task">
-              <div class="card" v-if="task.status == 'done'">
+              <div
+                class="card"
+                v-if="task.status == 'done'"
+                @click="openTask($event)"
+                :data-slug="task.id"
+              >
                 <p>{{ task.title }}</p>
-                <span>0 of {{ task.subtask.length - 1 }} subtasks</span>
+                <span>0 of {{ task.subtask.length }} subtasks</span>
               </div>
             </div>
           </div>
@@ -188,6 +228,7 @@ export default {
       title: "",
       description: "",
       subtask: [],
+      subtaskValue: [],
       status: "",
       number: 1,
       tasksValue: [],
@@ -195,6 +236,7 @@ export default {
       inprogress: [],
       done: [],
       activeBoard: "main",
+      id: 0,
     };
   },
   mounted() {
@@ -209,6 +251,7 @@ export default {
     localStorage.getItem("boards") &&
       (this.boards = JSON.parse(localStorage.getItem("boards")));
     document.querySelector(".board").classList.add("active");
+    console.log(this.tasksValue);
   },
   methods: {
     activeStatus(e) {
@@ -223,6 +266,27 @@ export default {
       document.querySelector(`#fade`).classList.remove(`hidden`);
       document.querySelector(`.popup`).classList.remove(`hidden`);
     },
+    openTask(e) {
+      document.querySelector(`#fade`).classList.remove(`hidden`);
+      document.querySelector(`.task-popup`).classList.remove(`hidden`);
+      if (
+        this.subtask[0] == "" ||
+        this.subtask[0] == undefined ||
+        this.subtask[0] == null
+      ) {
+        this.subtask.shift();
+      }
+      for (const task of this.tasksValue) {
+        if (task.id == e.currentTarget.dataset.slug) {
+          this.title = task.title;
+          this.description = task.description;
+          this.subtask = task.subtask;
+          this.status = task.status;
+          this.id = task.id;
+          console.log(task, "task");
+        }
+      }
+    },
     closePopup() {
       document.querySelector(`#fade`).classList.add(`hidden`);
       document.querySelector(`.popup`).classList.add(`hidden`);
@@ -231,8 +295,17 @@ export default {
     addTask() {
       document.querySelector(`#fade`).classList.add(`hidden`);
       document.querySelector(`.popup`).classList.add(`hidden`);
+      this.id++;
       if (this.subtask[this.subtask.length - 1] == "") {
         this.subtask.pop();
+      } else if (this.subtask.length == 0) {
+        this.subtask.push("No subtask");
+      } else if (
+        this.subtask[0] == "" ||
+        this.subtask[0] == undefined ||
+        this.subtask[0] == null
+      ) {
+        this.subtask.shift();
       }
       if (this.title == "" || this.subtask == "") {
         alert("Please enter a title");
@@ -242,7 +315,9 @@ export default {
           title: this.title,
           description: this.description,
           subtask: this.subtask,
+          completed: false,
           status: this.status,
+          id: this.id,
         });
       }
       switch (this.status) {
@@ -273,6 +348,11 @@ export default {
       } else {
         alert("Please enter a subtask");
       }
+      this.subtaskValue.push({
+        value: this.subtask[this.number - 1],
+        completed: false,
+      });
+      console.log(this.subtaskValue);
     },
     removeSubtask(e) {
       if (this.number > 1) {

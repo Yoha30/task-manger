@@ -45,9 +45,11 @@
     .content {
         @apply text-[#717785] font-medium p-6 h-full md:h-auto flex justify-between place-items-start overflow-x-scroll md:overflow-x-hidden;
     }
+
     .content > div {
         @apply mr-4;
     }
+
     .card {
         @apply bg-[#2C2C38] p-4 rounded-lg w-80 min-h-full flex justify-center flex-col mt-8 cursor-pointer;
     }
@@ -102,13 +104,44 @@
         -webkit-appearance: none;
         -moz-appearance: none;
     }
-    .select-style select option{
+
+    .select-style select option {
         background: #2C2C38;
     }
-    .active{
+
+    .active {
         @apply bg-[#635FC6] rounded-r-full h-10 w-11/12 text-white !important;
     }
-    .active svg{
+
+    .active svg {
         @apply fill-white !important;
+    }
+
+    input[type="checkbox"] {
+        position: absolute !important;
+        opacity: 0 !important;
+        cursor: pointer !important;
+        margin: 0 !important;
+        top: 1rem;
+        left: 0.5rem;
+        width: 1.5rem !important;
+        height: 1.5rem !important;
+        z-index: 999;
+    }
+
+    .checkbox {
+        @apply absolute top-4 left-2 h-6 w-6 bg-[#2C2C38] rounded border border-gray-200/20;
+    }
+
+    input:checked ~ .checkbox {
+        background-image: url("./checkmark.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: #635FC6;
+    }
+
+    input:checked ~ p {
+        text-decoration: line-through;
+        color: #717785;
     }
 }
