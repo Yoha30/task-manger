@@ -103,10 +103,28 @@
     </div>
     <div class="w-full">
       <nav>
-        <h1>{{ activeBoard }}</h1>
         <div class="flex place-items-center">
-          <button @click="taskpopup" class="btn btn-primary">
+          <h1>{{ activeBoard }}</h1>
+          <svg
+            class="w-6 block md:hidden pt-2 mx-2"
+            fill="#635FC6"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M17,9.17a1,1,0,0,0-1.41,0L12,12.71,8.46,9.17a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42l4.24,4.24a1,1,0,0,0,1.42,0L17,10.59A1,1,0,0,0,17,9.17Z"
+            />
+          </svg>
+        </div>
+        <div class="flex place-items-center">
+          <button @click="taskpopup" class="btn btn-primary hidden md:block">
             + Add New Task
+          </button>
+          <button
+            @click="taskpopup"
+            class="btn btn-primary text-xl block md:hidden"
+          >
+            +
           </button>
           <button class="w-6 mx-3">
             <img src="./assets/menu.svg" />
@@ -114,7 +132,7 @@
         </div>
       </nav>
       <div class="content">
-        <div class="flex place-items-center">
+        <div class="flex place-items-center min-w-full md:min-w-fit">
           <div>
             <div class="flex place-items-center">
               <span class="w-4 h-4 rounded-full bg-blue-300 mr-2"></span>
@@ -128,7 +146,7 @@
             </div>
           </div>
         </div>
-        <div class="flex place-items-center">
+        <div class="flex place-items-center min-w-full md:min-w-fit">
           <div>
             <div class="flex place-items-center">
               <span class="w-4 h-4 rounded-full bg-purple-300 mr-2"></span>
@@ -142,7 +160,7 @@
             </div>
           </div>
         </div>
-        <div class="flex place-items-center">
+        <div class="flex place-items-center min-w-full md:min-w-fit">
           <div>
             <div class="flex place-items-center">
               <span class="w-4 h-4 rounded-full bg-green-300 mr-2"></span>
@@ -188,7 +206,8 @@ export default {
       (this.inprogress = JSON.parse(localStorage.getItem("inprogress")));
     localStorage.getItem("done") &&
       (this.done = JSON.parse(localStorage.getItem("done")));
-    console.log(this.tasksValue, this.inprogress);
+    localStorage.getItem("boards") &&
+      (this.boards = JSON.parse(localStorage.getItem("boards")));
     document.querySelector(".board").classList.add("active");
   },
   methods: {
@@ -275,6 +294,7 @@ export default {
     },
     addItem() {
       this.boards.push(this.board);
+      localStorage.setItem("boards", JSON.stringify(this.boards));
       this.board = "";
       console.log(this.boards);
       document.querySelector(`.board-popup`).classList.add(`hidden`);
