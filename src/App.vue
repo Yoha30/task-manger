@@ -295,7 +295,7 @@ export default {
     addTask() {
       document.querySelector(`#fade`).classList.add(`hidden`);
       document.querySelector(`.popup`).classList.add(`hidden`);
-      this.id++;
+      this.id = this.tasksValue.length + 1;
       if (this.subtask[this.subtask.length - 1] == "") {
         this.subtask.pop();
       } else if (this.subtask.length == 0) {
@@ -348,10 +348,6 @@ export default {
       } else {
         alert("Please enter a subtask");
       }
-      this.subtaskValue.push({
-        value: this.subtask[this.number - 1],
-        completed: false,
-      });
       console.log(this.subtaskValue);
     },
     removeSubtask(e) {
