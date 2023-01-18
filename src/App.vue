@@ -259,7 +259,7 @@ export default {
     };
   },
   mounted() {
-    localStorage.clear("task") &&
+    localStorage.getItem("task") &&
       (this.tasksValue = JSON.parse(localStorage.getItem("task")));
     localStorage.getItem("todo") &&
       (this.todo = JSON.parse(localStorage.getItem("todo")));
