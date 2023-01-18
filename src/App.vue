@@ -91,6 +91,13 @@
             <p class="ml-8">{{ task }}</p>
           </div>
         </div>
+        <div class="select-style">
+          <select v-model="status">
+            <option value="todo">To Do</option>
+            <option value="inprogress">In Progress</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
       </div>
     </div>
     <div class="sidebar">
@@ -253,6 +260,30 @@ export default {
     document.querySelector(".board").classList.add("active");
     console.log(this.tasksValue);
   },
+  watch: {
+    status(newVal, oldVal) {
+      console.log(newVal, oldVal);
+      if (!oldVal) {
+        return;
+      } else {
+        for (const task of this.tasksValue) {
+          if (task.id == this.id) {
+            task.status = newVal;
+          }
+        }
+        this.todo = this.tasksValue.filter((task) => task.status == "todo");
+        this.inprogress = this.tasksValue.filter(
+          (task) => task.status == "inprogress"
+        );
+        this.done = this.tasksValue.filter((task) => task.status == "done");
+        console.log(this.todo, "todo");
+      }
+      localStorage.setItem("task", JSON.stringify(this.tasksValue));
+      localStorage.setItem("todo", JSON.stringify(this.todo));
+      localStorage.setItem("inprogress", JSON.stringify(this.inprogress));
+      localStorage.setItem("done", JSON.stringify(this.done));
+    },
+  },
   methods: {
     activeStatus(e) {
       const list = document.querySelectorAll(".board");
@@ -308,7 +339,8 @@ export default {
         this.subtask.shift();
       }
       if (this.title == "" || this.subtask == "") {
-        alert("Please enter a title");
+        document.querySelector(`#fade`).classList.remove(`hidden`);
+        document.querySelector(`.popup`).classList.remove(`hidden`);
         this.number = 1;
       } else {
         this.tasksValue.push({
