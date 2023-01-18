@@ -81,18 +81,29 @@
       <div>
         <p class="text-sm">Subtasks(2 of {{ subtask.length }})</p>
         <div
-          v-for="task of subtask"
+          v-for="(task, index) of subtask"
           v-bind:key="task"
           class="p-4 flex place-items-center relative bg-[#21212D] rounded mt-3"
         >
           <div>
-            <input type="checkbox" v-model="completed" />
+            <input
+              v-if="tasksValue.length > 0"
+              type="checkbox"
+              v-model="subtaskValue[index].completed"
+              @change="finishedSubtasks(index)"
+            />
             <span class="checkbox"></span>
-            <p class="ml-8">{{ task }}</p>
+            <p
+              v-if="tasksValue.length > 0"
+              :class="{ complete: subtaskValue[index].completed }"
+              class="ml-8"
+            >
+              {{ task }}
+            </p>
           </div>
         </div>
         <div class="select-style">
-          <select v-model="status">
+          <select v-model="status" @change="taskStatus">
             <option value="todo">To Do</option>
             <option value="inprogress">In Progress</option>
             <option value="done">Done</option>
@@ -242,6 +253,7 @@ export default {
       todo: [],
       inprogress: [],
       done: [],
+      completed: [],
       activeBoard: "main",
       id: 0,
     };
@@ -257,34 +269,36 @@ export default {
       (this.done = JSON.parse(localStorage.getItem("done")));
     localStorage.getItem("boards") &&
       (this.boards = JSON.parse(localStorage.getItem("boards")));
+    localStorage.getItem("subtask") &&
+      (this.subtaskValue = JSON.parse(localStorage.getItem("subtask")));
+    localStorage.getItem("completed") &&
+      (this.completed = JSON.parse(localStorage.getItem("completed")));
     document.querySelector(".board").classList.add("active");
     console.log(this.tasksValue);
   },
-  watch: {
-    status(newVal, oldVal) {
-      console.log(newVal, oldVal);
-      if (!oldVal) {
-        return;
-      } else {
-        for (const task of this.tasksValue) {
-          if (task.id == this.id) {
-            task.status = newVal;
-          }
+  methods: {
+    finishedSubtasks() {
+      console.log(this.subtaskValue, "subtaskvalue");
+      localStorage.setItem("subtask", JSON.stringify(this.subtaskValue));
+      localStorage.setItem("completed", JSON.stringify(this.completed));
+      localStorage.setItem("task", JSON.stringify(this.tasksValue));
+    },
+    taskStatus() {
+      for (const task of this.tasksValue) {
+        if (task.id == this.id) {
+          task.status = this.status;
         }
-        this.todo = this.tasksValue.filter((task) => task.status == "todo");
-        this.inprogress = this.tasksValue.filter(
-          (task) => task.status == "inprogress"
-        );
-        this.done = this.tasksValue.filter((task) => task.status == "done");
-        console.log(this.todo, "todo");
       }
+      this.todo = this.tasksValue.filter((task) => task.status == "todo");
+      this.inprogress = this.tasksValue.filter(
+        (task) => task.status == "inprogress"
+      );
+      this.done = this.tasksValue.filter((task) => task.status == "done");
       localStorage.setItem("task", JSON.stringify(this.tasksValue));
       localStorage.setItem("todo", JSON.stringify(this.todo));
       localStorage.setItem("inprogress", JSON.stringify(this.inprogress));
       localStorage.setItem("done", JSON.stringify(this.done));
     },
-  },
-  methods: {
     activeStatus(e) {
       const list = document.querySelectorAll(".board");
       for (const board of list) {
@@ -309,12 +323,12 @@ export default {
       }
       for (const task of this.tasksValue) {
         if (task.id == e.currentTarget.dataset.slug) {
+          console.log(task, "this.id");
           this.title = task.title;
           this.description = task.description;
           this.subtask = task.subtask;
           this.status = task.status;
           this.id = task.id;
-          console.log(task, "task");
         }
       }
     },
@@ -329,8 +343,6 @@ export default {
       this.id = this.tasksValue.length + 1;
       if (this.subtask[this.subtask.length - 1] == "") {
         this.subtask.pop();
-      } else if (this.subtask.length == 0) {
-        this.subtask.push("No subtask");
       } else if (
         this.subtask[0] == "" ||
         this.subtask[0] == undefined ||
@@ -338,20 +350,27 @@ export default {
       ) {
         this.subtask.shift();
       }
-      if (this.title == "" || this.subtask == "") {
-        document.querySelector(`#fade`).classList.remove(`hidden`);
-        document.querySelector(`.popup`).classList.remove(`hidden`);
+      if (this.title == "" || this.subtask == "" || this.status == "") {
         this.number = 1;
       } else {
+        console.log(this.status, "status");
         this.tasksValue.push({
           title: this.title,
           description: this.description,
           subtask: this.subtask,
-          completed: false,
+          completed: [],
           status: this.status,
           id: this.id,
         });
       }
+      var iterator = this.subtask.values();
+      for (const task of iterator) {
+        this.subtaskValue.push({
+          name: task,
+          completed: false,
+        });
+      }
+      console.log(this.subtaskValue);
       switch (this.status) {
         case "todo":
           this.todo.push(this.status);
@@ -367,9 +386,11 @@ export default {
       localStorage.setItem("todo", JSON.stringify(this.todo));
       localStorage.setItem("inprogress", JSON.stringify(this.inprogress));
       localStorage.setItem("done", JSON.stringify(this.done));
+      localStorage.setItem("subtask", JSON.stringify(this.subtaskValue));
       this.title = "";
       this.description = "";
       this.subtask = [];
+      this.subtaskValue = [];
       this.status = "";
       this.number = 1;
     },
@@ -380,7 +401,6 @@ export default {
       } else {
         alert("Please enter a subtask");
       }
-      console.log(this.subtaskValue);
     },
     removeSubtask(e) {
       if (this.number > 1) {
