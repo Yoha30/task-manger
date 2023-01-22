@@ -796,7 +796,7 @@ input:checked ~ .checkbox {
   background-color: #635FC6;
 }
 
-input:checked ~ p {
+.complete {
   text-decoration: line-through;
   color: #717785;
 }
