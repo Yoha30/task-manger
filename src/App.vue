@@ -194,7 +194,11 @@
               <span class="w-4 h-4 rounded-full bg-blue-300 mr-2"></span>
               <p class="uppercase">todo ({{ todo.length }})</p>
             </div>
-            <div v-for="task of tasksValue" v-bind:key="task">
+            <div
+              v-for="task of tasksValue"
+              v-bind:key="task"
+              v-show="tasksValue.length > 0"
+            >
               <div
                 :data-slug="task.id"
                 class="card"
@@ -258,7 +262,7 @@ export default {
       board: "",
       title: "",
       description: "",
-      subtask: [""],
+      subtask: [],
       status: "",
       number: 1,
       tasksValue: [],
@@ -277,7 +281,7 @@ export default {
     };
   },
   mounted() {
-    localStorage.getItem("task") &&
+    localStorage.clear("task") &&
       (this.tasksValue = JSON.parse(localStorage.getItem("task")));
     localStorage.getItem("todo") &&
       (this.todo = JSON.parse(localStorage.getItem("todo")));
@@ -357,7 +361,6 @@ export default {
       this.addTaskpopup = false;
       this.task.id = this.tasksValue.length + 1;
       this.tasksValue.push(this.task);
-      console.log(this.tasksValue, "tasksValue");
       switch (this.task.status) {
         case "todo":
           this.todo.push(this.task.status);
@@ -381,9 +384,8 @@ export default {
     addSubtask() {
       if (this.subtask[this.subtask.length - 1] != "") {
         this.subtask.push("");
-        console.log(this.subtaskValue, "subtask");
         this.subtaskValue = this.subtask.filter((subtask) => {
-          if (subtask != "") {
+          if (subtask != "" && subtask != undefined && subtask != null) {
             this.subtaskValue.push({
               name: subtask,
               id: this.subtaskId++,
