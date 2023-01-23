@@ -281,7 +281,7 @@ export default {
     };
   },
   mounted() {
-    localStorage.clear("task") &&
+    localStorage.getItem("task") &&
       (this.tasksValue = JSON.parse(localStorage.getItem("task")));
     localStorage.getItem("todo") &&
       (this.todo = JSON.parse(localStorage.getItem("todo")));
@@ -360,7 +360,16 @@ export default {
     addTask() {
       this.addTaskpopup = false;
       this.task.id = this.tasksValue.length + 1;
-      this.tasksValue.push(this.task);
+      if (
+        this.task.title == "" ||
+        this.task.title == undefined ||
+        this.task.title == null
+      ) {
+        return;
+      } else {
+        this.tasksValue.push(this.task);
+      }
+      console.log(this.tasksValue);
       switch (this.task.status) {
         case "todo":
           this.todo.push(this.task.status);
