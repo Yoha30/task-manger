@@ -281,7 +281,7 @@ export default {
     };
   },
   mounted() {
-    localStorage.getItem("task") &&
+    localStorage.clear("task") &&
       (this.tasksValue = JSON.parse(localStorage.getItem("task")));
     localStorage.getItem("todo") &&
       (this.todo = JSON.parse(localStorage.getItem("todo")));
@@ -361,9 +361,12 @@ export default {
       this.addTaskpopup = false;
       this.task.id = this.tasksValue.length + 1;
       if (
-        this.task.title == "" ||
-        this.task.title == undefined ||
-        this.task.title == null
+        (this.task.title == "" ||
+          this.task.title == undefined ||
+          this.task.title == null) &&
+        (this.task.subtask[0].name == "" ||
+          this.task.subtask[0].name == undefined ||
+          this.task.subtask[0].name == null)
       ) {
         return;
       } else {
