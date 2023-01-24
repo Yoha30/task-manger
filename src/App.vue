@@ -291,10 +291,6 @@ export default {
       (this.done = JSON.parse(localStorage.getItem("done")));
     localStorage.getItem("boards") &&
       (this.boards = JSON.parse(localStorage.getItem("boards")));
-    localStorage.getItem("subtask") &&
-      (this.subtaskValue = JSON.parse(localStorage.getItem("subtask")));
-    localStorage.getItem("completed") &&
-      (this.completed = JSON.parse(localStorage.getItem("completed")));
     document.querySelector(".board").classList.add("active");
     console.log(this.tasksValue);
   },
@@ -358,19 +354,20 @@ export default {
       this.boardPopup = false;
     },
     addTask() {
-      this.addTaskpopup = false;
       this.task.id = this.tasksValue.length + 1;
       if (
-        (this.task.title == "" ||
-          this.task.title == undefined ||
-          this.task.title == null) &&
-        (this.task.subtask[0].name == "" ||
-          this.task.subtask[0].name == undefined ||
-          this.task.subtask[0].name == null)
+        this.task.title == "" ||
+        this.task.title == undefined ||
+        this.task.title == null ||
+        this.task.subtask == "" ||
+        this.task.subtask == undefined ||
+        this.task.subtask == null
       ) {
         return;
       } else {
         this.tasksValue.push(this.task);
+        this.addTaskpopup = false;
+        console.log("error");
       }
       console.log(this.tasksValue);
       switch (this.task.status) {
