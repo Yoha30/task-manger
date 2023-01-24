@@ -89,8 +89,7 @@
       </div>
       <div>
         <p class="text-sm">
-          Subtasks({{ task[0].subtask.completed }} of
-          {{ task[0].subtask.length }})
+          Subtasks({{ completed.length }} of {{ task[0].subtask.length }})
         </p>
         <div
           v-for="task of task[0].subtask"
@@ -291,6 +290,8 @@ export default {
       (this.done = JSON.parse(localStorage.getItem("done")));
     localStorage.getItem("boards") &&
       (this.boards = JSON.parse(localStorage.getItem("boards")));
+    localStorage.getItem("completed") &&
+      (this.completed = JSON.parse(localStorage.getItem("completed")));
     document.querySelector(".board").classList.add("active");
     console.log(this.tasksValue);
   },
@@ -301,13 +302,15 @@ export default {
           if (subtask.id == index) {
             if (subtask.completed == false) {
               subtask.completed = true;
+              this.completed.push(subtask);
             } else {
               subtask.completed = false;
+              this.completed.pop();
             }
           }
         });
       });
-      console.log(this.task, "subtaskvalue");
+      localStorage.setItem("completed", JSON.stringify(this.completed));
       localStorage.setItem("task", JSON.stringify(this.tasksValue));
     },
     taskStatus() {
