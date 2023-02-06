@@ -5,6 +5,34 @@
     :root {
         --sidebar-text-color: #717785;
     }
+    @font-face {
+        font-family: 'PlusJakartaSans';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('PlusJakartaSans-Regular.ttf') format('ttf') /* Chrome 26+, Opera 23+, Firefox 39+ */
+    }
+    @font-face {
+        font-family: 'PlusJakartaSans';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url('PlusJakartaSans-Bold.ttf') format('ttf') /* Chrome 26+, Opera 23+, Firefox 39+ */
+    }
+    @font-face {
+        font-family: 'PlusJakartaSans';
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url('PlusJakartaSans-Medium.ttf') format('ttf') /* Chrome 26+, Opera 23+, Firefox 39+ */
+    }
+    @font-face {
+        font-family: 'PlusJakartaSans';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url('PlusJakartaSans-SemiBold.ttf') format('ttf') /* Chrome 26+, Opera 23+, Firefox 39+ */
+    }
 
     body {
         @apply bg-[#21212D];
@@ -110,7 +138,15 @@
     }
 
     .active {
-        @apply bg-[#635FC6] rounded-r-full h-10 w-11/12 text-white !important;
+        @apply bg-[#635FC6] rounded-r-full h-12 text-white !important;
+    }
+    .sidebar-list li{
+        @apply h-12 flex place-items-center duration-500 text-ellipsis;
+        max-width: calc(100% - 4rem);
+    }
+
+    .sidebar-list li:hover:not(.active) {
+        @apply bg-white rounded-r-full flex place-items-center duration-500 !important;
     }
 
     .active svg {

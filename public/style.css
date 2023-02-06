@@ -517,6 +517,62 @@ video {
   --sidebar-text-color: #717785;
 }
 
+@font-face {
+  font-family: 'PlusJakartaSans';
+
+  font-style: normal;
+
+  font-weight: 400;
+
+  font-display: swap;
+
+  src: url('PlusJakartaSans-Regular.ttf') format('ttf')
+
+  /* Chrome 26+, Opera 23+, Firefox 39+ */
+}
+
+@font-face {
+  font-family: 'PlusJakartaSans';
+
+  font-style: normal;
+
+  font-weight: 700;
+
+  font-display: swap;
+
+  src: url('PlusJakartaSans-Bold.ttf') format('ttf')
+
+  /* Chrome 26+, Opera 23+, Firefox 39+ */
+}
+
+@font-face {
+  font-family: 'PlusJakartaSans';
+
+  font-style: normal;
+
+  font-weight: 500;
+
+  font-display: swap;
+
+  src: url('PlusJakartaSans-Medium.ttf') format('ttf')
+
+  /* Chrome 26+, Opera 23+, Firefox 39+ */
+}
+
+@font-face {
+  font-family: 'PlusJakartaSans';
+
+  font-style: normal;
+
+  font-weight: 600;
+
+  font-display: swap;
+
+  src: url('PlusJakartaSans-SemiBold.ttf') format('ttf')
+
+  /* Chrome 26+, Opera 23+, Firefox 39+ */
+}
+
 body {
   --tw-bg-opacity: 1;
   background-color: rgb(33 33 45 / var(--tw-bg-opacity));
@@ -750,14 +806,32 @@ nav h1 {
 }
 
 .active {
-  height: 2.5rem !important;
-  width: 91.666667% !important;
+  height: 3rem !important;
   border-top-right-radius: 9999px !important;
   border-bottom-right-radius: 9999px !important;
   --tw-bg-opacity: 1 !important;
   background-color: rgb(99 95 198 / var(--tw-bg-opacity)) !important;
   --tw-text-opacity: 1 !important;
   color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
+}
+
+.sidebar-list li {
+  display: flex;
+  height: 3rem;
+  place-items: center;
+  text-overflow: ellipsis;
+  transition-duration: 500ms;
+  max-width: calc(100% - 4rem);
+}
+
+.sidebar-list li:hover:not(.active) {
+  display: flex !important;
+  place-items: center !important;
+  border-top-right-radius: 9999px !important;
+  border-bottom-right-radius: 9999px !important;
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity)) !important;
+  transition-duration: 500ms !important;
 }
 
 .active svg {
@@ -937,6 +1011,18 @@ input:checked ~ .checkbox {
   fill: #717785;
 }
 
+.fill-\[\#3F3F46\] {
+  fill: #3F3F46;
+}
+
+.stroke-\[\#3F3F46\] {
+  stroke: #3F3F46;
+}
+
+.stroke-\[\#292D32\] {
+  stroke: #292D32;
+}
+
 .p-2 {
   padding: 0.5rem;
 }
@@ -998,6 +1084,24 @@ input:checked ~ .checkbox {
 .text-gray-500 {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+
+.text-\[\#3F3F46\] {
+  --tw-text-opacity: 1;
+  color: rgb(63 63 70 / var(--tw-text-opacity));
+}
+
+.text-\[\#\] {
+  color: #;
+}
+
+.text-\[\#\#0164FF\] {
+  color: ##0164FF;
+}
+
+.text-\[\#0164FF\] {
+  --tw-text-opacity: 1;
+  color: rgb(1 100 255 / var(--tw-text-opacity));
 }
 
 .filter {
